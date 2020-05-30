@@ -19,7 +19,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let wait_time = Duration::from_secs(settings.interval_min * 60);
 
     loop {
-        tweeter.send_tweet(db.get_random(1)?.quote.clone()).await?;
+        let quote = db.get_random(1, 270)?;
+        let message = format!("#{}:\n{}", quote.id, quote.quote);
+        tweeter.send_tweet(message).await?;
+
         delay_for(wait_time).await;
     }
 }

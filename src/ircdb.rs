@@ -28,10 +28,10 @@ impl IrcDb {
         })
     }
 
-    pub fn get_random(&self, num: i64) -> Result<Quote> {
+    pub fn get_random(&self, num: i64, max_length: i64) -> Result<Quote> {
         self.conn
-            .prepare("SELECT * FROM quotes WHERE LENGTH(quote) < 280 order by RANDOM() limit ?")?
-            .query_row(params![num], Quote::from_row)
+            .prepare("SELECT * FROM quotes WHERE LENGTH(quote) < ? order by RANDOM() limit ?")?
+            .query_row(params![max_length, num], Quote::from_row)
     }
 
     #[allow(dead_code)]
