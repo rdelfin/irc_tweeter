@@ -28,20 +28,20 @@ impl IrcDb {
         })
     }
 
-    pub fn get_random(&mut self, num: i64) -> Result<Quote> {
+    pub fn get_random(&self, num: i64) -> Result<Quote> {
         self.conn
             .prepare("SELECT * FROM quotes WHERE LENGTH(quote) < 280 order by RANDOM() limit ?")?
             .query_row(params![num], Quote::from_row)
     }
 
-    pub fn get_all(&mut self) -> Result<Vec<Quote>> {
+    pub fn get_all(&self) -> Result<Vec<Quote>> {
         self.conn
             .prepare("SELECT * FROM quotes")?
             .query_map(params![], Quote::from_row)?
             .collect()
     }
 
-    pub fn get_count(&mut self) -> Result<i64> {
+    pub fn get_count(&self) -> Result<i64> {
         self.conn
             .prepare("SELECT COUNT(*) FROM quotes")?
             .query_row(params![], |row| row.get(0))
