@@ -1,4 +1,4 @@
-use config::{Config, ConfigError, Environment, File};
+use config::{Config, ConfigError, File};
 use std::env;
 
 #[derive(Debug, Deserialize)]
@@ -21,8 +21,8 @@ impl Settings {
         s.merge(File::with_name("config/default"))?;
 
         let env = env::var("MODE").unwrap_or("development".into());
-        s.merge(File::with_name(&format!("config/{}", env)).required(false));
-        s.merge(File::with_name(&format!("config/local")).required(false));
+        s.merge(File::with_name(&format!("config/{}", env)).required(false))?;
+        s.merge(File::with_name(&format!("config/local")).required(false))?;
 
         s.try_into()
     }
