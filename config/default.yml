@@ -3,3 +3,5 @@ twitter:
     api_secret: sample_secret
     access_token: sample_token
     access_secret: sample_secret
+db:
+    file: bashorg.db

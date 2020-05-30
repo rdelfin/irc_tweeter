@@ -10,8 +10,14 @@ pub struct Twitter {
 }
 
 #[derive(Debug, Deserialize)]
+pub struct Db {
+    pub file: String,
+}
+
+#[derive(Debug, Deserialize)]
 pub struct Settings {
     pub twitter: Twitter,
+    pub db: Db,
 }
 
 impl Settings {
