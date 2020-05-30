@@ -2,16 +2,16 @@ use config::{Config, ConfigError, Environment, File};
 use std::env;
 
 #[derive(Debug, Deserialize)]
-struct Twitter {
-    api_key: String,
-    api_secret: String,
-    access_token: String,
-    access_secret: String,
+pub struct Twitter {
+    pub api_key: String,
+    pub api_secret: String,
+    pub access_token: String,
+    pub access_secret: String,
 }
 
 #[derive(Debug, Deserialize)]
 pub struct Settings {
-    twitter: Twitter,
+    pub twitter: Twitter,
 }
 
 impl Settings {
