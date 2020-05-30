@@ -5,3 +5,4 @@ twitter:
     access_secret: sample_secret
 db:
     file: bashorg.db
+interval_min: 5
