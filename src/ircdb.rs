@@ -34,6 +34,7 @@ impl IrcDb {
             .query_row(params![num], Quote::from_row)
     }
 
+    #[allow(dead_code)]
     pub fn get_all(&self) -> Result<Vec<Quote>> {
         self.conn
             .prepare("SELECT * FROM quotes")?
@@ -41,6 +42,7 @@ impl IrcDb {
             .collect()
     }
 
+    #[allow(dead_code)]
     pub fn get_count(&self) -> Result<i64> {
         self.conn
             .prepare("SELECT COUNT(*) FROM quotes")?
