@@ -10,14 +10,29 @@ mod tweeter;
 use crate::config::Settings;
 use ircdb::IrcDb;
 use log4rs;
+use std::path::Path;
 use std::time::Duration;
+use structopt::StructOpt;
 use tokio::time::delay_for;
 use tweeter::Tweeter;
 
+#[derive(StructOpt, Debug)]
+#[structopt(name = "irc_tweeter")]
+struct Opt {
+    #[structopt(short = "c", long)]
+    config_dir: Option<String>,
+}
+
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
-    let settings = Settings::new()?;
-    log4rs::init_file("config/log4rs.yml", Default::default())?;
+    let opt = Opt::from_args();
+    let config_dir = opt.config_dir.unwrap_or(String::from("config"));
+
+    let settings = Settings::new(&Path::new(&config_dir))?;
+    log4rs::init_file(
+        &Path::new(&config_dir).join("log4rs.yml").as_path(),
+        Default::default(),
+    )?;
     let tweeter = Tweeter::new(&settings);
     let db = IrcDb::new(&settings.db.file)?;
     let wait_time = Duration::from_secs(settings.interval_min * 60);
