@@ -19,6 +19,7 @@ pub struct Settings {
     pub twitter: Twitter,
     pub db: Db,
     pub interval_min: u64,
+    pub write: bool,
 }
 
 impl Settings {

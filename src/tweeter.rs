@@ -5,6 +5,7 @@ use egg_mode::{KeyPair, Token};
 
 pub struct Tweeter {
     token: Token,
+    write: bool,
 }
 
 impl Tweeter {
@@ -22,11 +23,17 @@ impl Tweeter {
                 consumer: key,
                 access: access,
             },
+            write: settings.write,
         }
     }
 
     pub async fn send_tweet(&self, content: String) -> Result<()> {
-        DraftTweet::new(content).send(&self.token).await?;
+        if !self.write {
+            info!("TWEETING IN NO WRITE MODE. Skipping tweet.");
+            info!("Would have tweeted: {}", content.replace("\n", "\\n"));
+        } else {
+            DraftTweet::new(content).send(&self.token).await?;
+        }
         Ok(())
     }
 }

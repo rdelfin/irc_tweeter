@@ -6,3 +6,4 @@ twitter:
 db:
     file: bashorg.db
 interval_min: 5
+write: true
