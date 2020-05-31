@@ -27,7 +27,11 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     loop {
         let quote = db.get_random(1, 270)?;
         let message = format!("#{}:\n{}", quote.id, quote.quote);
-        info!("Tweeting quote #{}: {}", quote.id, quote.quote);
+        info!(
+            "Tweeting quote #{}: {}",
+            quote.id,
+            quote.quote.replace("\n", "\\n")
+        );
         tweeter.send_tweet(message).await?;
         info!("Sent tweet");
 
